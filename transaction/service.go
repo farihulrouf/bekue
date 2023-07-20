@@ -14,7 +14,7 @@ type service struct {
 }
 
 type Service interface {
-	GetTransactionByProductID(input GetProductTransactionInput) ([]Transaction, error)
+	GetTransactionsByProductID(input GetProductTransactionsInput) ([]Transaction, error)
 	GetTransactionsByUserID(userID int) ([]Transaction, error)
 	CreateTransaction(input CreateTransactionInput) (Transaction, error)
 	ProcessPayment(input TransactionNotificationInput) error
@@ -25,15 +25,14 @@ func NewService(repository Repository, productRepository product.Repository, pay
 	return &service{repository, productRepository, paymentService}
 }
 
-func (s *service) GetTransactionByProductID(input GetProductTransactionInput) ([]Transaction, error) {
-
+func (s *service) GetTransactionsByProductID(input GetProductTransactionsInput) ([]Transaction, error) {
 	product, err := s.productRepository.FindByID(input.ID)
 	if err != nil {
 		return []Transaction{}, err
 	}
 
 	if product.UserID != input.User.ID {
-		return []Transaction{}, errors.New("not an owner of product")
+		return []Transaction{}, errors.New("Not an owner of the product")
 	}
 
 	transactions, err := s.repository.GetByProductID(input.ID)
@@ -44,8 +43,10 @@ func (s *service) GetTransactionByProductID(input GetProductTransactionInput) ([
 	return transactions, nil
 }
 
+
+
 func (s *service) GetTransactionsByUserID(userID int) ([]Transaction, error) {
-	transactions, err := s.repository.GetByUSerID(userID)
+	transactions, err := s.repository.GetByUserID(userID)
 	if err != nil {
 		return transactions, err
 	}
@@ -59,18 +60,18 @@ func (s *service) CreateTransaction(input CreateTransactionInput) (Transaction, 
 	transaction.Amount = input.Amount
 	transaction.UserID = input.User.ID
 	transaction.Status = "pending"
-	transaction.Code = ""
 
 	newTransaction, err := s.repository.Save(transaction)
 	if err != nil {
 		return newTransaction, err
 	}
 
-	paymentTransaction := payment.Transaction{
+	paymentTransacation := payment.Transaction{
 		ID:     newTransaction.ID,
 		Amount: newTransaction.Amount,
 	}
-	paymentURL, err := s.paymentService.GetPaymentURL(paymentTransaction, input.User)
+
+	paymentURL, err := s.paymentService.GetPaymentURL(paymentTransacation, input.User)
 	if err != nil {
 		return newTransaction, err
 	}
@@ -97,7 +98,7 @@ func (s *service) ProcessPayment(input TransactionNotificationInput) error {
 		transaction.Status = "paid"
 	} else if input.TransactionStatus == "settlement" {
 		transaction.Status = "paid"
-	} else if input.TransactionStatus == "deny" || transaction.Status == "expire" || transaction.Status == "cancelled" {
+	} else if input.TransactionStatus == "deny" || input.TransactionStatus == "expire" || input.TransactionStatus == "cancel" {
 		transaction.Status = "cancelled"
 	}
 

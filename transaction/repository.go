@@ -4,7 +4,9 @@ import "gorm.io/gorm"
 
 type Repository interface {
 	GetByProductID(productID int) ([]Transaction, error)
-	GetByUSerID(ID int) ([]Transaction, error)
+	GetByUserID(userID int) ([]Transaction, error)
+
+	//GetByUSerID(ID int) ([]Transaction, error)
 	GetByID(userID int) (Transaction, error)
 	Save(transaction Transaction) (Transaction, error)
 	Update(transaction Transaction) (Transaction, error)
@@ -30,7 +32,7 @@ func (r *repository) GetByProductID(productID int) ([]Transaction, error) {
 	return transactions, nil
 }
 
-func (r *repository) GetByUSerID(userID int) ([]Transaction, error) {
+func (r *repository) GetByUserID(userID int) ([]Transaction, error) {
 	var transactions []Transaction
 
 	err := r.db.Preload("Product.ProductImages", "product_images.is_primary = 1").Where("user_id = ?", userID).Order("id desc").Find(&transactions).Error

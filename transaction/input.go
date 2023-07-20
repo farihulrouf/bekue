@@ -2,7 +2,7 @@ package transaction
 
 import "behosting/user"
 
-type GetProductTransactionInput struct {
+type GetProductTransactionsInput struct {
 	ID   int `uri:"id" binding:"required"`
 	User user.User
 }

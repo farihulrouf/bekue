@@ -18,6 +18,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/multitemplate"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -44,20 +46,30 @@ func main() {
 	userHandler := handler.NewUserHandler(userService, authService)
 	productHandler := handler.NewProductHandler(productService)
 	transactionHandler := handler.NewTransactionHandler(transactionService)
-	
-	userWebHandler := webHandler.NewUserHandler()
+
+	userWebHandler := webHandler.NewUserHandler(userService)
+	productWebHanlder := webHandler.NewProductHandler(productService, userService)
+	transactionWebHandler := webHandler.NewTransactionHandler(transactionService)
+	sessionWebHandler := webHandler.NewSessionHandler(userService)
 
 	router := gin.Default()
 	router.Use(cors.Default())
-	
+
+	cookieStore := cookie.NewStore([]byte(auth.SECRET_KEY))
+	router.Use(sessions.Sessions("behosting", cookieStore))
+
 	router.HTMLRender = loadTemplates("./web/templates")
 
 	router.Static("/images", "./images")
+	router.Static("/css", "./web/assets/css")
+	router.Static("/js", "./web/assets/js")
+	router.Static("/webfonts", "./web/assets/webfonts")
+
 	api := router.Group("/api/v1")
 
 	api.POST("/users", userHandler.RegisterUser)
 	api.POST("/sessions", userHandler.Login)
-	api.POST("/email_checkers", userHandler.CheckEmailAvailablelity)
+	api.POST("/email_checkers", userHandler.CheckEmailAvailability)
 	api.POST("/avatars", authMiddleware(authService, userService), userHandler.UploadAvatar)
 	api.GET("/users/fetch", authMiddleware(authService, userService), userHandler.FetchUser)
 
@@ -67,16 +79,34 @@ func main() {
 	api.PUT("/products/:id", authMiddleware(authService, userService), productHandler.UpdateProduct)
 	api.POST("/product-images", authMiddleware(authService, userService), productHandler.UploadImage)
 
-	api.GET("products/:id/transactions", authMiddleware(authService, userService), transactionHandler.GetProductTransactions)
+	api.GET("/products/:id/transactions", authMiddleware(authService, userService), transactionHandler.GetProductTransactions)
 	api.GET("/transactions", authMiddleware(authService, userService), transactionHandler.GetUserTransactions)
 	api.POST("/transactions", authMiddleware(authService, userService), transactionHandler.CreateTransaction)
 	api.POST("/transactions/notification", transactionHandler.GetNotification)
 
+	router.GET("/users", authAdminMiddleware(), userWebHandler.Index)
+	router.GET("/users/new", userWebHandler.New)
+	router.POST("/users", userWebHandler.Create)
+	router.GET("/users/edit/:id", userWebHandler.Edit)
+	router.POST("/users/update/:id", authAdminMiddleware(), userWebHandler.Update)
+	router.GET("/users/avatar/:id", authAdminMiddleware(), userWebHandler.NewAvatar)
+	router.POST("/users/avatar/:id", authAdminMiddleware(), userWebHandler.CreateAvatar)
 
-	router.GET("/users", userWebHandler.Index)
+	router.GET("/products", authAdminMiddleware(), productWebHanlder.Index)
+	router.GET("/products/new", authAdminMiddleware(), productWebHanlder.New)
+	router.POST("/products", authAdminMiddleware(), productWebHanlder.Create)
+	router.GET("/products/image/:id", authAdminMiddleware(), productWebHanlder.NewImage)
+	router.POST("/products/image/:id", authAdminMiddleware(), productWebHanlder.CreateImage)
+	router.GET("/products/edit/:id", authAdminMiddleware(), productWebHanlder.Edit)
+	router.POST("/products/update/:id", authAdminMiddleware(), productWebHanlder.Update)
+	router.GET("/products/show/:id", authAdminMiddleware(), productWebHanlder.Show)
+	router.GET("/transactions", authAdminMiddleware(), transactionWebHandler.Index)
 
-	router.Run(":8080")
+	router.GET("/login", sessionWebHandler.New)
+	router.POST("/session", sessionWebHandler.Create)
+	router.GET("/logout", sessionWebHandler.Destroy)
 
+	router.Run()
 }
 
 func authMiddleware(authService auth.Service, userService user.Service) gin.HandlerFunc {
@@ -120,7 +150,19 @@ func authMiddleware(authService auth.Service, userService user.Service) gin.Hand
 		}
 
 		c.Set("currentUser", user)
+	}
+}
 
+func authAdminMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		session := sessions.Default(c)
+
+		userIDSession := session.Get("userID")
+
+		if userIDSession == nil {
+			c.Redirect(http.StatusFound, "/login")
+			return
+		}
 	}
 }
 
@@ -137,7 +179,6 @@ func loadTemplates(templatesDir string) multitemplate.Renderer {
 		panic(err.Error())
 	}
 
-	// Generate our templates map from our layouts/ and includes/ directories
 	for _, include := range includes {
 		layoutCopy := make([]string, len(layouts))
 		copy(layoutCopy, layouts)

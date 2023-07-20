@@ -11,12 +11,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// tangkap parameter handler
-// handler ke service
-// service yang menentukan service mana yg di-call
-// repository : FindAll, FIndByUserID
-// db
-
 type productHandler struct {
 	service product.Service
 }
@@ -25,7 +19,6 @@ func NewProductHandler(service product.Service) *productHandler {
 	return &productHandler{service}
 }
 
-//api/v1/products
 func (h *productHandler) GetProducts(c *gin.Context) {
 	userID, _ := strconv.Atoi(c.Query("user_id"))
 
@@ -36,11 +29,11 @@ func (h *productHandler) GetProducts(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("List of products", http.StatusOK, "Success", product.FormatProducts(products))
+	response := helper.APIResponse("List of products", http.StatusOK, "success", product.FormatProducts(products))
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *productHandler) GetProduct(c *gin.Context){
+func (h *productHandler) GetProduct(c *gin.Context) {
 	var input product.GetProductDetailInput
 
 	err := c.ShouldBindUri(&input)
@@ -54,16 +47,17 @@ func (h *productHandler) GetProduct(c *gin.Context){
 	if err != nil {
 		response := helper.APIResponse("Failed to get detail of product", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
+		return
 	}
 
-	response := helper.APIResponse("Product detail", http.StatusOK, "success", product.FormatProductDetail(productDetail))
+	response := helper.APIResponse("product detail", http.StatusOK, "success", product.FormatProductDetail(productDetail))
 	c.JSON(http.StatusOK, response)
 }
 
 func (h *productHandler) CreateProduct(c *gin.Context) {
 	var input product.CreateProductInput
 
-	err := c.ShouldBind(&input)
+	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}
@@ -74,6 +68,7 @@ func (h *productHandler) CreateProduct(c *gin.Context) {
 	}
 
 	currentUser := c.MustGet("currentUser").(user.User)
+
 	input.User = currentUser
 
 	newProduct, err := h.service.CreateProduct(input)
@@ -83,7 +78,7 @@ func (h *productHandler) CreateProduct(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("Success to create product", http.StatusOK, "Success", product.FormatProduct(newProduct))
+	response := helper.APIResponse("Success to create product", http.StatusOK, "success", product.FormatProduct(newProduct))
 	c.JSON(http.StatusOK, response)
 }
 
@@ -99,10 +94,7 @@ func (h *productHandler) UpdateProduct(c *gin.Context) {
 
 	var inputData product.CreateProductInput
 
-	currentUser := c.MustGet("currentUser").(user.User)
-	inputData.User = currentUser
-
-	err = c.ShouldBind(&inputData)
+	err = c.ShouldBindJSON(&inputData)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}
@@ -111,6 +103,9 @@ func (h *productHandler) UpdateProduct(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
+
+	currentUser := c.MustGet("currentUser").(user.User)
+	inputData.User = currentUser
 
 	updatedProduct, err := h.service.UpdateProduct(inputID, inputData)
 	if err != nil {
@@ -147,8 +142,8 @@ func (h *productHandler) UploadImage(c *gin.Context) {
 		response := helper.APIResponse("Failed to upload product image", http.StatusBadRequest, "error", data)
 
 		c.JSON(http.StatusBadRequest, response)
-		return 
-	}	
+		return
+	}
 
 	path := fmt.Sprintf("images/%d-%s", userID, file.Filename)
 
@@ -171,9 +166,7 @@ func (h *productHandler) UploadImage(c *gin.Context) {
 	}
 
 	data := gin.H{"is_uploaded": true}
-	response := helper.APIResponse("product image succesfully uploaded", http.StatusOK, "success", data)
+	response := helper.APIResponse("product image successfuly uploaded", http.StatusOK, "success", data)
 
 	c.JSON(http.StatusOK, response)
-
-
 }

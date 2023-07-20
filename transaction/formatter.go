@@ -1,6 +1,8 @@
 package transaction
 
-import "time"
+import (
+	"time"
+)
 
 type ProductTransactionFormatter struct {
 	ID        int       `json:"id"`
@@ -15,7 +17,6 @@ func FormatProductTransaction(transaction Transaction) ProductTransactionFormatt
 	formatter.Name = transaction.User.Name
 	formatter.Amount = transaction.Amount
 	formatter.CreatedAt = transaction.CreatedAt
-
 	return formatter
 }
 
@@ -24,14 +25,14 @@ func FormatProductTransactions(transactions []Transaction) []ProductTransactionF
 		return []ProductTransactionFormatter{}
 	}
 
-	var transactionFormatter []ProductTransactionFormatter
+	var transactionsFormatter []ProductTransactionFormatter
 
 	for _, transaction := range transactions {
 		formatter := FormatProductTransaction(transaction)
-		transactionFormatter = append(transactionFormatter, formatter)
+		transactionsFormatter = append(transactionsFormatter, formatter)
 	}
 
-	return transactionFormatter
+	return transactionsFormatter
 }
 
 type UserTransactionFormatter struct {
@@ -72,14 +73,14 @@ func FormatUserTransactions(transactions []Transaction) []UserTransactionFormatt
 		return []UserTransactionFormatter{}
 	}
 
-	var transactionFormatter []UserTransactionFormatter
+	var transactionsFormatter []UserTransactionFormatter
 
 	for _, transaction := range transactions {
 		formatter := FormatUserTransaction(transaction)
-		transactionFormatter = append(transactionFormatter, formatter)
+		transactionsFormatter = append(transactionsFormatter, formatter)
 	}
 
-	return transactionFormatter
+	return transactionsFormatter
 }
 
 type TransactionFormatter struct {
@@ -101,6 +102,5 @@ func FormatTransaction(transaction Transaction) TransactionFormatter {
 	formatter.Status = transaction.Status
 	formatter.Code = transaction.Code
 	formatter.PaymentURL = transaction.PaymentURL
-
 	return formatter
 }
