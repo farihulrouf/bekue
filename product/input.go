@@ -1,12 +1,12 @@
-package campaign
+package product
 
 import "behosting/user"
 
-type GetCampaignDetailInput struct {
+type GetProductDetailInput struct {
 	ID int `uri:"id" binding:"required"`
 }
 
-type CreateCampaignInput struct {
+type CreateProductInput struct {
 	Name             string `json:"name" binding:"required"`
 	ShortDescription string `json:"short_description" binding:"required"`
 	Description      string `json:"description" binding:"required"`
@@ -15,8 +15,8 @@ type CreateCampaignInput struct {
 	User             user.User 
 }
 
-type CreateCampaignImageInput struct {
-	CampaignID int `form:"campaign_id" binding:"required"`
+type CreateProductImageInput struct {
+	ProductID int `form:"product_id" binding:"required"`
 	IsPrimary  bool `form:"is_primary"`
 	User       user.User 
 }

@@ -2,7 +2,7 @@ package main
 
 import (
 	"behosting/auth"
-	"behosting/campaign"
+	"behosting/product"
 	"behosting/handler"
 	"behosting/helper"
 	"behosting/payment"
@@ -32,17 +32,17 @@ func main() {
 	}
 
 	userRepository := user.NewRepository(db)
-	campaignRepository := campaign.NewRepository(db)
+	productRepository := product.NewRepository(db)
 	transactionRepository := transaction.NewRepository(db)
 
 	userService := user.NewService(userRepository)
-	campaignService := campaign.NewService(campaignRepository)
+	productService := product.NewService(productRepository)
 	authService := auth.NewService()
 	paymentService := payment.NewService()
-	transactionService := transaction.NewService(transactionRepository, campaignRepository, paymentService)
+	transactionService := transaction.NewService(transactionRepository, productRepository, paymentService)
 
 	userHandler := handler.NewUserHandler(userService, authService)
-	campaignHandler := handler.NewCampaignHandler(campaignService)
+	productHandler := handler.NewProductHandler(productService)
 	transactionHandler := handler.NewTransactionHandler(transactionService)
 	
 	userWebHandler := webHandler.NewUserHandler()
@@ -61,13 +61,13 @@ func main() {
 	api.POST("/avatars", authMiddleware(authService, userService), userHandler.UploadAvatar)
 	api.GET("/users/fetch", authMiddleware(authService, userService), userHandler.FetchUser)
 
-	api.GET("/campaigns", campaignHandler.GetCampaigns)
-	api.GET("/campaigns/:id", campaignHandler.GetCampaign)
-	api.POST("/campaigns", authMiddleware(authService, userService), campaignHandler.CreateCampaign)
-	api.PUT("/campaigns/:id", authMiddleware(authService, userService), campaignHandler.UpdateCampaign)
-	api.POST("/campaign-images", authMiddleware(authService, userService), campaignHandler.UploadImage)
+	api.GET("/products", productHandler.GetProducts)
+	api.GET("/products/:id", productHandler.GetProduct)
+	api.POST("/products", authMiddleware(authService, userService), productHandler.CreateProduct)
+	api.PUT("/products/:id", authMiddleware(authService, userService), productHandler.UpdateProduct)
+	api.POST("/product-images", authMiddleware(authService, userService), productHandler.UploadImage)
 
-	api.GET("campaigns/:id/transactions", authMiddleware(authService, userService), transactionHandler.GetCampaignTransactions)
+	api.GET("products/:id/transactions", authMiddleware(authService, userService), transactionHandler.GetProductTransactions)
 	api.GET("/transactions", authMiddleware(authService, userService), transactionHandler.GetUserTransactions)
 	api.POST("/transactions", authMiddleware(authService, userService), transactionHandler.CreateTransaction)
 	api.POST("/transactions/notification", transactionHandler.GetNotification)

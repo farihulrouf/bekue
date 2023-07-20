@@ -2,15 +2,15 @@ package transaction
 
 import "time"
 
-type CampaignTransactionFormatter struct {
+type ProductTransactionFormatter struct {
 	ID        int       `json:"id"`
 	Name      string    `json:"name"`
 	Amount    int       `json:"amount"`
 	CreatedAt time.Time `json:"created_at"`
 }
 
-func FormatCampaignTransaction(transaction Transaction) CampaignTransactionFormatter {
-	formatter := CampaignTransactionFormatter{}
+func FormatProductTransaction(transaction Transaction) ProductTransactionFormatter {
+	formatter := ProductTransactionFormatter{}
 	formatter.ID = transaction.ID
 	formatter.Name = transaction.User.Name
 	formatter.Amount = transaction.Amount
@@ -19,15 +19,15 @@ func FormatCampaignTransaction(transaction Transaction) CampaignTransactionForma
 	return formatter
 }
 
-func FormatCampaignTransactions(transactions []Transaction) []CampaignTransactionFormatter {
+func FormatProductTransactions(transactions []Transaction) []ProductTransactionFormatter {
 	if len(transactions) == 0 {
-		return []CampaignTransactionFormatter{}
+		return []ProductTransactionFormatter{}
 	}
 
-	var transactionFormatter []CampaignTransactionFormatter
+	var transactionFormatter []ProductTransactionFormatter
 
 	for _, transaction := range transactions {
-		formatter := FormatCampaignTransaction(transaction)
+		formatter := FormatProductTransaction(transaction)
 		transactionFormatter = append(transactionFormatter, formatter)
 	}
 
@@ -39,10 +39,10 @@ type UserTransactionFormatter struct {
 	Amount    int               `json:"amount"`
 	Status    string            `json:"status"`
 	CreatedAt time.Time         `json:"created_at"`
-	Campaign  CampaignFormatter `json:"campaign"`
+	Product  ProductFormatter `json:"product"`
 }
 
-type CampaignFormatter struct {
+type ProductFormatter struct {
 	Name     string `json:"name"`
 	ImageURL string `json:"image_url"`
 }
@@ -54,15 +54,15 @@ func FormatUserTransaction(transaction Transaction) UserTransactionFormatter {
 	formatter.Status = transaction.Status
 	formatter.CreatedAt = transaction.CreatedAt
 
-	campaignFormatter := CampaignFormatter{}
-	campaignFormatter.Name = transaction.Campaign.Name
-	campaignFormatter.ImageURL = ""
+	productFormatter := ProductFormatter{}
+	productFormatter.Name = transaction.Product.Name
+	productFormatter.ImageURL = ""
 
-	if len(transaction.Campaign.CampaignImages) > 0 {
-		campaignFormatter.ImageURL = transaction.Campaign.CampaignImages[0].FileName
+	if len(transaction.Product.ProductImages) > 0 {
+		productFormatter.ImageURL = transaction.Product.ProductImages[0].FileName
 	}
 
-	formatter.Campaign = campaignFormatter
+	formatter.Product = productFormatter
 
 	return formatter
 }
@@ -84,7 +84,7 @@ func FormatUserTransactions(transactions []Transaction) []UserTransactionFormatt
 
 type TransactionFormatter struct {
 	ID         int    `json:"id"`
-	CampaignID int    `json:"campaign_id"`
+	ProductID int    `json:"product_id"`
 	UserID     int    `json:"user_id"`
 	Amount     int    `json:"amount"`
 	Status     string `json:"status"`
@@ -95,7 +95,7 @@ type TransactionFormatter struct {
 func FormatTransaction(transaction Transaction) TransactionFormatter {
 	formatter := TransactionFormatter{}
 	formatter.ID = transaction.ID
-	formatter.CampaignID = transaction.CampaignID
+	formatter.ProductID = transaction.ProductID
 	formatter.UserID = transaction.UserID
 	formatter.Amount = transaction.Amount
 	formatter.Status = transaction.Status

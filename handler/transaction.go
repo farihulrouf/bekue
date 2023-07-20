@@ -17,12 +17,12 @@ func NewTransactionHandler(service transaction.Service) *transactionHandler {
 	return &transactionHandler{service}
 }
 
-func (h *transactionHandler) GetCampaignTransactions(c *gin.Context) {
-	var input transaction.GetCampaignTransactionInput
+func (h *transactionHandler) GetProductTransactions(c *gin.Context) {
+	var input transaction.GetProductTransactionInput
 
 	err := c.ShouldBindUri(&input)
 	if err != nil {
-		response := helper.APIResponse("Failed to get campaign's transactions", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Failed to get product's transactions", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
@@ -30,14 +30,14 @@ func (h *transactionHandler) GetCampaignTransactions(c *gin.Context) {
 	currentUser := c.MustGet("currentUser").(user.User)
 	input.User = currentUser
 
-	transactions, err := h.service.GetTransactionByCampaignID(input)
+	transactions, err := h.service.GetTransactionByProductID(input)
 	if err != nil {
-		response := helper.APIResponse("Failed to get campaign's transactions", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Failed to get Product's transactions", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	response := helper.APIResponse("Campaign's transaction", http.StatusOK, "success", transaction.FormatCampaignTransactions(transactions))
+	response := helper.APIResponse("product's transaction", http.StatusOK, "success", transaction.FormatProductTransactions(transactions))
 	c.JSON(http.StatusOK, response)
 }
 

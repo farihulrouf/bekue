@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"behosting/campaign"
+	"behosting/product"
 	"behosting/helper"
 	"behosting/user"
 	"fmt"
@@ -17,58 +17,58 @@ import (
 // repository : FindAll, FIndByUserID
 // db
 
-type campaignHandler struct {
-	service campaign.Service
+type productHandler struct {
+	service product.Service
 }
 
-func NewCampaignHandler(service campaign.Service) *campaignHandler {
-	return &campaignHandler{service}
+func NewProductHandler(service product.Service) *productHandler {
+	return &productHandler{service}
 }
 
-//api/v1/campaigns
-func (h *campaignHandler) GetCampaigns(c *gin.Context) {
+//api/v1/products
+func (h *productHandler) GetProducts(c *gin.Context) {
 	userID, _ := strconv.Atoi(c.Query("user_id"))
 
-	campaigns, err := h.service.GetCampaigns(userID)
+	products, err := h.service.GetProducts(userID)
 	if err != nil {
-		response := helper.APIResponse("Error to get campaigns", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Error to get products", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	response := helper.APIResponse("List of campaigns", http.StatusOK, "Success", campaign.FormatCampaigns(campaigns))
+	response := helper.APIResponse("List of products", http.StatusOK, "Success", product.FormatProducts(products))
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *campaignHandler) GetCampaign(c *gin.Context){
-	var input campaign.GetCampaignDetailInput
+func (h *productHandler) GetProduct(c *gin.Context){
+	var input product.GetProductDetailInput
 
 	err := c.ShouldBindUri(&input)
 	if err != nil {
-		response := helper.APIResponse("Failed to get detail of campaign", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Failed to get detail of product", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	campaignDetail, err := h.service.GetCampaignByID(input)
+	productDetail, err := h.service.GetProductByID(input)
 	if err != nil {
-		response := helper.APIResponse("Failed to get detail of campaign", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Failed to get detail of product", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 	}
 
-	response := helper.APIResponse("Campaign detail", http.StatusOK, "success", campaign.FormatCampaignDetail(campaignDetail))
+	response := helper.APIResponse("Product detail", http.StatusOK, "success", product.FormatProductDetail(productDetail))
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *campaignHandler) CreateCampaign(c *gin.Context) {
-	var input campaign.CreateCampaignInput
+func (h *productHandler) CreateProduct(c *gin.Context) {
+	var input product.CreateProductInput
 
 	err := c.ShouldBind(&input)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}
 
-		response := helper.APIResponse("Failed to create campaign", http.StatusUnprocessableEntity, "error", errorMessage)
+		response := helper.APIResponse("Failed to create product", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -76,28 +76,28 @@ func (h *campaignHandler) CreateCampaign(c *gin.Context) {
 	currentUser := c.MustGet("currentUser").(user.User)
 	input.User = currentUser
 
-	newCampaign, err := h.service.CreateCampaign(input)
+	newProduct, err := h.service.CreateProduct(input)
 	if err != nil {
-		response := helper.APIResponse("Failed to create campaign", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Failed to create product", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	response := helper.APIResponse("Success to create campaign", http.StatusOK, "Success", campaign.FormatCampaign(newCampaign))
+	response := helper.APIResponse("Success to create product", http.StatusOK, "Success", product.FormatProduct(newProduct))
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *campaignHandler) UpdateCampaign(c *gin.Context) {
-	var inputID campaign.GetCampaignDetailInput
+func (h *productHandler) UpdateProduct(c *gin.Context) {
+	var inputID product.GetProductDetailInput
 
 	err := c.ShouldBindUri(&inputID)
 	if err != nil {
-		response := helper.APIResponse("Failed to update campaign", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Failed to update product", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	var inputData campaign.CreateCampaignInput
+	var inputData product.CreateProductInput
 
 	currentUser := c.MustGet("currentUser").(user.User)
 	inputData.User = currentUser
@@ -107,24 +107,24 @@ func (h *campaignHandler) UpdateCampaign(c *gin.Context) {
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}
 
-		response := helper.APIResponse("Failed to update campaign", http.StatusUnprocessableEntity, "error", errorMessage)
+		response := helper.APIResponse("Failed to update product", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 
-	updatedCampaign, err := h.service.UpdateCampaign(inputID, inputData)
+	updatedProduct, err := h.service.UpdateProduct(inputID, inputData)
 	if err != nil {
-		response := helper.APIResponse("Failed to update campaign", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Failed to update product", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	response := helper.APIResponse("Success to update campaign", http.StatusOK, "success", campaign.FormatCampaign(updatedCampaign))
+	response := helper.APIResponse("Success to update product", http.StatusOK, "success", product.FormatProduct(updatedProduct))
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *campaignHandler) UploadImage(c *gin.Context) {
-	var input campaign.CreateCampaignImageInput
+func (h *productHandler) UploadImage(c *gin.Context) {
+	var input product.CreateProductImageInput
 
 	err := c.ShouldBind(&input)
 
@@ -132,7 +132,7 @@ func (h *campaignHandler) UploadImage(c *gin.Context) {
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}
 
-		response := helper.APIResponse("Failed to upload campaign image", http.StatusUnprocessableEntity, "error", errorMessage)
+		response := helper.APIResponse("Failed to upload product image", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
@@ -144,7 +144,7 @@ func (h *campaignHandler) UploadImage(c *gin.Context) {
 	file, err := c.FormFile("file")
 	if err != nil {
 		data := gin.H{"is_uploaded": false}
-		response := helper.APIResponse("Failed to upload campaign image", http.StatusBadRequest, "error", data)
+		response := helper.APIResponse("Failed to upload product image", http.StatusBadRequest, "error", data)
 
 		c.JSON(http.StatusBadRequest, response)
 		return 
@@ -155,23 +155,23 @@ func (h *campaignHandler) UploadImage(c *gin.Context) {
 	err = c.SaveUploadedFile(file, path)
 	if err != nil {
 		data := gin.H{"is_uploaded": false}
-		response := helper.APIResponse("Failed to upload campaign image", http.StatusBadRequest, "error", data)
+		response := helper.APIResponse("Failed to upload product image", http.StatusBadRequest, "error", data)
 
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	_, err = h.service.SaveCampaignImage(input, path)
+	_, err = h.service.SaveProductImage(input, path)
 	if err != nil {
 		data := gin.H{"is_uploaded": false}
-		response := helper.APIResponse("Failed to upload campaign image", http.StatusBadRequest, "error", data)
+		response := helper.APIResponse("Failed to upload product image", http.StatusBadRequest, "error", data)
 
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
 	data := gin.H{"is_uploaded": true}
-	response := helper.APIResponse("Campaign image succesfully uploaded", http.StatusOK, "success", data)
+	response := helper.APIResponse("product image succesfully uploaded", http.StatusOK, "success", data)
 
 	c.JSON(http.StatusOK, response)
 

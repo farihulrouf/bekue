@@ -1,7 +1,7 @@
 package transaction
 
 import (
-	"behosting/campaign"
+	"behosting/product"
 	"behosting/user"
 	"time"
 )
@@ -9,14 +9,14 @@ import (
 
 type Transaction struct {
 	ID         int
-	CampaignID int
+	ProductID int
 	UserID     int	
 	Amount     int
 	Status     string
 	Code       string
 	PaymentURL string
 	User 	   user.User
-	Campaign   campaign.Campaign
+	Product    product.Product
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }

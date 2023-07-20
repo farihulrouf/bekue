@@ -1,4 +1,5 @@
-package campaign
+
+package product
 
 import (
 	"behosting/user"
@@ -6,7 +7,7 @@ import (
 )
 
 
-type Campaign struct {
+type Product struct {
 	ID               int
 	UserID           int
 	Name             string
@@ -19,13 +20,13 @@ type Campaign struct {
 	Slug             string
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
-	CampaignImages 	 []CampaignImage
+	ProductImages 	 []ProductImage
 	User 			 user.User
 }
 
-type CampaignImage struct {
+type ProductImage struct {
 	ID         int
-	CampaignID int
+	ProductID int
 	FileName   string
 	IsPrimary  int
 	CreatedAt  time.Time
