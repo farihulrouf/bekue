@@ -11,12 +11,19 @@ type ProductFormatter struct {
 	GoalAmount       int    `json:"goal_amount"`
 	CurrentAmount    int    `json:"current_amount"`
 	Slug             string `json:"slug"`
+	Perks            []string  `json:"perks"`
+
 }
 
 func FormatProduct(product Product) ProductFormatter {
 
 	productFormatter := ProductFormatter{}
 
+
+	var perks []string
+	for _, perk := range strings.Split(product.Perks, ",") {
+		perks = append(perks, strings.TrimSpace(perk))
+	}
 	productFormatter.ID = product.ID
 	productFormatter.UserID = product.UserID
 	productFormatter.Name = product.Name
@@ -25,10 +32,12 @@ func FormatProduct(product Product) ProductFormatter {
 	productFormatter.CurrentAmount = product.CurrentAmount
 	productFormatter.Slug = product.Slug
 	productFormatter.ImageURL = ""
+	productFormatter.Perks = perks
 	if len(product.ProductImages) > 0 {
 		productFormatter.ImageURL = product.ProductImages[0].FileName
 
 	}
+
 	
 
 	return productFormatter
