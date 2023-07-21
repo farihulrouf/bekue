@@ -2,7 +2,7 @@
 
 <h2 class="mb-4">List of Campaign</h2>
 
-<a href="/campaigns/new" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> New Campaign</a>
+<a href="/products/new" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> New Campaign</a>
 
 <div class="card mb-4">
     <div class="card-body">
@@ -19,19 +19,19 @@
                 </tr>
             </thead>
             <tbody>
-                {{ range .campaigns }}
+                {{ range .products }}
                 <tr>
                     <td>
-                        {{ if .CampaignImages }}
-                            <img width="60" src="/{{ (index .CampaignImages 0).FileName }}" class="img-fluid img-thumbnail">
+                        {{ if .ProductImages }}
+                            <img width="60" src="/{{ (index .ProductImages 0).FileName }}" class="img-fluid img-thumbnail">
                         {{ end }}
                     </td>
                     <td>{{ .Name }}</td>
                     <td>{{ .ShortDescription }}</td>
                     <td>{{ .GoalAmountFormatIDR }}</td>
-                    <td><a href="/campaigns/show/{{ .ID }}"><i class="fa fa-search"></i><a></td>
-                    <td><a href="/campaigns/edit/{{ .ID }}"><i class="fa fa-edit"></i><a></td>
-                    <td><a href="/campaigns/image/{{ .ID }}"><i class="fa fa-camera"></i><a></td>
+                    <td><a href="/products/show/{{ .ID }}"><i class="fa fa-search"></i><a></td>
+                    <td><a href="/products/edit/{{ .ID }}"><i class="fa fa-edit"></i><a></td>
+                    <td><a href="/products/image/{{ .ID }}"><i class="fa fa-camera"></i><a></td>
                 </tr>
                 {{ end }}
             </tbody>

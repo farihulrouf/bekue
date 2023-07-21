@@ -19,7 +19,7 @@ type repository struct {
 func NewRepository(db *gorm.DB) *repository {
 	return &repository{db}
 }
-
+/*
 func (r *repository) FindAll() ([]Product, error) {
 	var products []Product
 
@@ -30,6 +30,19 @@ func (r *repository) FindAll() ([]Product, error) {
 
 	return products, nil
 }
+*/
+
+func (r *repository) FindAll() ([]Product, error) {
+	var campaigns []Product
+
+	err := r.db.Preload("ProductImages", "product_images.is_primary = 1").Find(&campaigns).Error
+	if err != nil {
+		return campaigns, err
+	}
+
+	return campaigns, nil
+}
+
 
 func (r *repository) FindByUserID(userID int) ([]Product, error) {
 	var products []Product
