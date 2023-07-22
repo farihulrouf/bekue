@@ -71,7 +71,7 @@ func (h *productHandler) Create(c *gin.Context) {
 	createProductInput.Name = input.Name
 	createProductInput.ShortDescription = input.ShortDescription
 	createProductInput.Description = input.Description
-	createProductInput.GoalAmount = input.GoalAmount
+	createProductInput.Price = input.Price
 	createProductInput.Perks = input.Perks
 	createProductInput.User = user
 
@@ -153,7 +153,7 @@ func (h *productHandler) Edit(c *gin.Context) {
 	input.Name = existingProduct.Name
 	input.ShortDescription = existingProduct.ShortDescription
 	input.Description = existingProduct.Description
-	input.GoalAmount = existingProduct.GoalAmount
+	input.Price = existingProduct.Price
 	input.Perks = existingProduct.Perks
 
 	c.HTML(http.StatusOK, "product_edit.html", input)
@@ -191,7 +191,7 @@ func (h *productHandler) Update(c *gin.Context) {
 	updateInput.Name = input.Name
 	updateInput.ShortDescription = input.ShortDescription
 	updateInput.Description = input.Description
-	updateInput.GoalAmount = input.GoalAmount
+	updateInput.Price = input.Price
 	updateInput.Perks = input.Perks
 	updateInput.User = userProduct
 

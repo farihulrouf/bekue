@@ -8,7 +8,7 @@ type ProductFormatter struct {
 	Name             string `json:"name"`
 	ShortDescription string `json:"short_description"`
 	ImageURL         string `json:"image_url"`
-	GoalAmount       int    `json:"goal_amount"`
+	Price       	 int    `json:"price"`
 	CurrentAmount    int    `json:"current_amount"`
 	Slug             string `json:"slug"`
 	Perks            []string  `json:"perks"`
@@ -28,7 +28,7 @@ func FormatProduct(product Product) ProductFormatter {
 	productFormatter.UserID = product.UserID
 	productFormatter.Name = product.Name
 	productFormatter.ShortDescription = product.ShortDescription
-	productFormatter.GoalAmount = product.GoalAmount
+	productFormatter.Price = product.Price
 	productFormatter.CurrentAmount = product.CurrentAmount
 	productFormatter.Slug = product.Slug
 	productFormatter.ImageURL = ""
@@ -61,7 +61,7 @@ type ProductDetailFormatter struct {
 	ShortDescription string                   `json:"short_description"`
 	Description      string                   `json:"description"`
 	ImageURL         string                   `json:"image_url"`
-	GoalAmount       int                      `json:"goal_amount"`
+	Price            int                      `json:"price"`
 	CurrentAmount    int                      `json:"current_amount"`
 	BackerCount      int                      `json:"backer_count"`
 	UserID           int                      `json:"user_id"`
@@ -88,7 +88,7 @@ func FormatProductDetail(product Product) ProductDetailFormatter {
 	productDetailFormatter.Name = product.Name
 	productDetailFormatter.ShortDescription = product.ShortDescription
 	productDetailFormatter.Description = product.Description
-	productDetailFormatter.GoalAmount = product.GoalAmount
+	productDetailFormatter.Price = product.Price
 	productDetailFormatter.CurrentAmount = product.CurrentAmount
 	productDetailFormatter.BackerCount = product.BackerCount
 	productDetailFormatter.UserID = product.UserID

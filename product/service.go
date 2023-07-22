@@ -56,7 +56,7 @@ func (s *service) CreateProduct(input CreateProductInput) (Product, error) {
 	product.Name = input.Name
 	product.ShortDescription = input.ShortDescription
 	product.Description = input.Description
-	product.GoalAmount = input.GoalAmount
+	product.Price = input.Price
 	product.Perks = input.Perks
 	product.UserID = input.User.ID
 	// making slug unik with add id user on string slug
@@ -84,7 +84,7 @@ func (s *service) UpdateProduct(inputID GetProductDetailInput, inputData CreateP
 	product.Name = inputData.Name
 	product.ShortDescription = inputData.ShortDescription
 	product.Description = inputData.Description
-	product.GoalAmount = inputData.GoalAmount
+	product.Price = inputData.Price
 	product.Perks = inputData.Perks
 
 	updatedProduct, err := s.repository.Update(product)
