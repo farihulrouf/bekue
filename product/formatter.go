@@ -62,6 +62,10 @@ type ProductDetailFormatter struct {
 	Description      string                   `json:"description"`
 	ImageURL         string                   `json:"image_url"`
 	Price            int                      `json:"price"`
+	Discount	     int					  `json:"discount"`
+	Discountwo       int                      `json:"discountwo"`
+	Pricetwo         int                      `json:"pricetwo"`
+	Pricetree        int                      `json:"pricetree"`
 	CurrentAmount    int                      `json:"current_amount"`
 	BackerCount      int                      `json:"backer_count"`
 	UserID           int                      `json:"user_id"`
@@ -93,6 +97,10 @@ func FormatProductDetail(product Product) ProductDetailFormatter {
 	productDetailFormatter.BackerCount = product.BackerCount
 	productDetailFormatter.UserID = product.UserID
 	productDetailFormatter.Slug = product.Slug
+	productDetailFormatter.Discount = product.Discount
+	productDetailFormatter.Discountwo = product.Discountwo
+    productDetailFormatter.Pricetwo = product.Price - (product.Discount * product.Price)  / 100
+	productDetailFormatter.Pricetree = product.Price - (product.Discountwo *  product.Price)  /100 
 	productDetailFormatter.ImageURL = ""
 
 	if len(product.ProductImages) > 0 {

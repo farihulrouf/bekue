@@ -16,6 +16,8 @@ type Product struct {
 	Perks            string
 	BackerCount      int
 	Price            int
+	Discount         int
+	Discountwo       int
 	CurrentAmount    int
 	Slug             string
 	CreatedAt        time.Time
