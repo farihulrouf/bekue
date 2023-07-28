@@ -86,6 +86,9 @@ func (s *service) UpdateProduct(inputID GetProductDetailInput, inputData CreateP
 	product.Description = inputData.Description
 	product.Price = inputData.Price
 	product.Perks = inputData.Perks
+	product.Discount = inputData.Discount
+	product.Discountwo = inputData.Discountwo
+
 
 	updatedProduct, err := s.repository.Update(product)
 	if err != nil {

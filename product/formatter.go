@@ -9,6 +9,8 @@ type ProductFormatter struct {
 	ShortDescription string `json:"short_description"`
 	ImageURL         string `json:"image_url"`
 	Price       	 int    `json:"price"`
+	Discount       	 int    `json:"discount"`
+	Discountwo       int    `json:"discountwo"`
 	CurrentAmount    int    `json:"current_amount"`
 	Slug             string `json:"slug"`
 	Perks            []string  `json:"perks"`
@@ -29,6 +31,8 @@ func FormatProduct(product Product) ProductFormatter {
 	productFormatter.Name = product.Name
 	productFormatter.ShortDescription = product.ShortDescription
 	productFormatter.Price = product.Price
+	productFormatter.Discount = product.Discount
+	productFormatter.Discountwo = product.Discountwo
 	productFormatter.CurrentAmount = product.CurrentAmount
 	productFormatter.Slug = product.Slug
 	productFormatter.ImageURL = ""

@@ -11,6 +11,8 @@ type CreateProductInput struct {
 	ShortDescription string `json:"short_description" binding:"required"`
 	Description      string `json:"description" binding:"required"`
 	Price            int    `json:"price" binding:"required"`
+	Discount         int    `json:"discount" binding:"required"`
+	Discountwo       int    `json:"discountwo" binding:"required"`
 	Perks            string `json:"perks" binding:"required"`
 	User             user.User
 }
@@ -26,6 +28,8 @@ type FormCreateProductInput struct {
 	ShortDescription string `form:"short_description" binding:"required"`
 	Description      string `form:"description" binding:"required"`
 	Price      		 int    `form:"price" binding:"required"`
+	Discount         int    `form:"discount" binding:"required"`
+	Discountwo       int    `form:"discountwo" binding:"required"`
 	Perks            string `form:"perks" binding:"required"`
 	UserID           int    `form:"user_id" binding:"required"`
 	Users            []user.User
@@ -38,6 +42,8 @@ type FormUpdateProductInput struct {
 	ShortDescription string `form:"short_description" binding:"required"`
 	Description      string `form:"description" binding:"required"`
 	Price            int    `form:"price" binding:"required"`
+	Discount         int    `from:"discount" binding:"required"`
+	Discountwo       int    `from:"discountwo" binding:"required"`
 	Perks            string `form:"perks" binding:"required"`
 	Error            error
 	User             user.User
