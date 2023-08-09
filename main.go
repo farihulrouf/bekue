@@ -83,6 +83,9 @@ func main() {
 	api.GET("/transactions", authMiddleware(authService, userService), transactionHandler.GetUserTransactions)
 	api.POST("/transactions", authMiddleware(authService, userService), transactionHandler.CreateTransaction)
 	api.POST("/transactions/notification", transactionHandler.GetNotification)
+	api.GET("/transactions/:id", authMiddleware(authService, userService), transactionHandler.GetTransaction)
+	api.PUT("/transactions/:id", authMiddleware(authService, userService), transactionHandler.UpdateTransaction)
+
 
 	router.GET("/users", authAdminMiddleware(), userWebHandler.Index)
 	router.GET("/users/new", userWebHandler.New)

@@ -19,3 +19,10 @@ type TransactionNotificationInput struct {
 	PaymentType       string `json:"payment_type"`
 	FraudStatus       string `json:"fraud_status"`
 }
+type UpdateTransactionInput struct {
+	//ID               int `uri:"id" binding:"required"`
+	ID               int
+	Status           string `json:"status"`
+	User user.User
+
+}

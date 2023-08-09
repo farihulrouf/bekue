@@ -42,6 +42,34 @@ func (h *transactionHandler) GetProductTransactions(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+func (h *transactionHandler) GetTransaction(c *gin.Context) {
+	var input transaction.GetProductTransactionsInput
+
+	err := c.ShouldBindUri(&input)
+	if err != nil {
+		response := helper.APIResponse("Failed to get detail of transactions", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	currentUser := c.MustGet("currentUser").(user.User)
+
+	input.User = currentUser
+
+	transactionDetail, err := h.service.GetTransactionsById(input)
+	if err != nil {
+		response := helper.APIResponse("Failed to get detail of transactions", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("Product's transactions", http.StatusOK, "success", transaction.FormatProductTransaction(transactionDetail))
+	c.JSON(http.StatusOK, response)
+	
+	
+
+	
+}
+
 func (h *transactionHandler) GetUserTransactions(c *gin.Context) {
 	currentUser := c.MustGet("currentUser").(user.User)
 	userID := currentUser.ID
@@ -109,4 +137,38 @@ func (h *transactionHandler) GetNotification(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, input)
+}
+
+func (h *transactionHandler) UpdateTransaction(c *gin.Context) {
+	var inputID transaction.GetProductTransactionsInput
+
+	err := c.ShouldBindUri(&inputID)
+	if err != nil {
+		response := helper.APIResponse("Failed to update transaction", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	var inputData transaction.UpdateTransactionInput
+	err = c.ShouldBindJSON(&inputData)
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+
+		response := helper.APIResponse("Failed to update transaction", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	} 
+	currentUser := c.MustGet("currentUser").(user.User)
+	inputData.User = currentUser
+
+	updatedTransaction, err := h.service.UpdateTransaction(inputID, inputData)
+	if err != nil {
+		response := helper.APIResponse("Failed to update transaction", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("Success to update transaction", http.StatusOK, "success", transaction.FormatProductTransaction(updatedTransaction))
+	c.JSON(http.StatusOK, response)
+	
 }

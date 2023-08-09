@@ -14,12 +14,43 @@ type service struct {
 }
 
 type Service interface {
+	//GetProductTransactionsInput
 	GetTransactionsByProductID(input GetProductTransactionsInput) ([]Transaction, error)
+	GetTransactionsById(input GetProductTransactionsInput) (Transaction, error)
 	GetTransactionsByUserID(userID int) ([]Transaction, error)
 	CreateTransaction(input CreateTransactionInput) (Transaction, error)
 	ProcessPayment(input TransactionNotificationInput) error
 	GetAllTransactions() ([]Transaction, error)
+	UpdateTransaction(inputID GetProductTransactionsInput, inputData UpdateTransactionInput) (Transaction, error)
+
 }
+
+func (s *service) UpdateTransaction(inputID GetProductTransactionsInput, inputData UpdateTransactionInput) (Transaction, error) {
+	transaction, err := s.repository.GetByID(inputID.ID)
+	if err != nil {
+		return transaction, err
+	}
+
+	transaction.Status = inputData.Status
+
+
+	updatedTransaction, err := s.repository.Update(transaction)
+	if err != nil {
+		return updatedTransaction, err
+	}
+
+	return updatedTransaction, nil
+}
+
+func (s *service) GetTransactionsById(input GetProductTransactionsInput) (Transaction, error) {
+	transaction, err := s.repository.GetByID(input.ID)
+	if err != nil {
+		return transaction, err
+	}
+
+	return transaction, nil
+}
+
 
 func NewService(repository Repository, productRepository product.Repository, paymentService payment.Service) *service {
 	return &service{repository, productRepository, paymentService}
