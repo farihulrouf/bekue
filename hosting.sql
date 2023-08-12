@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 28, 2023 at 02:50 PM
+-- Generation Time: Aug 12, 2023 at 10:22 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -49,13 +49,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `user_id`, `name`, `short_description`, `description`, `price`, `discount`, `discountwo`, `current_amount`, `perks`, `backer_count`, `slug`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Basic', 'Gratis 1 domain!\r\n.com / .online / .site / .cloud / .website / .space / .xyz / .my.id / .web.id / .biz.id / .company', 'Diskripsi panjang lebar disini', 100000, 20, 25, 0, '10 GB SSD Storage, \r\nFree CDN,\r\n1 Website,\r\nFree Domain 1st Year\r\n\r\n\r\n', 0, 'slug satu', '2021-07-03 14:22:50', '2021-07-06 06:24:16'),
-(2, 1, 'Choice Plus', 'Gratis 1 domain!\r\n.com / .online / .site / .cloud / .website / .space / .xyz / .my.id / .web.id / .biz.id / .company', 'long long long longggg', 100000, 0, 25, 0, '40 GB SSD Storage, \r\nFree CDN,\r\nUnlimited Websites,\r\nFree Domain 1st Year\r\n\r\n\r\n', 0, 'slug dua', '2021-07-03 14:22:50', '2021-07-03 14:22:50'),
-(3, 2, 'Online Store', 'Gratis 1 domain!\r\n.com / .online / .site / .cloud / .website / .space / .xyz / .my.id / .web.id / .biz.id / .company', 'long long long longggg', 100000, 0, 25, 0, '100 GB SSD Storage,\r\nFree CDN,\r\n2 Websites,\r\nFree Domain 1st Year\r\n\r\n\r\n', 0, 'slug tiga', '2021-07-03 14:22:50', '2023-07-21 09:27:00'),
-(4, 2, 'Pro Basic', 'Gratis 1 domain!\r\n.com / .online / .site / .cloud / .website / .space / .xyz / .my.id / .web.id / .biz.id / .company', 'Diskripsi panjang lebar disini', 100000, 0, 25, 0, '100 GB SSD Storage,\r\nFree CDN,\r\nUnlimited Websites,\r\nFree Domain 1st Year,\r\nOptimized CPU Resources,\r\nFree Dedicated IP\r\n\r\n\r\n', 0, 'sebuah-campaign-yang-dibuat-hari-senin-2', '2021-07-05 13:21:29', '2021-07-05 13:21:29'),
-(5, 14, 'Pro Choice', 'Gratis 1 domain!\r\n.com / .online / .site / .cloud / .website / .space / .xyz / .my.id / .web.id / .biz.id / .company', 'Diskripsi panjang lebar disini', 100000, 0, 25, 0, '100 GB SSD Storage,\r\nFree CDN,\r\nUnlimited Websites,\r\nFree Domain 1st Year,\r\nOptimized CPU Resources,\r\nFree Dedicated IP\r\n\r\n\r\n', 0, 'sebuah-campaign-yang-dibuat-hari-senin-14', '2021-07-05 13:24:06', '2021-07-05 13:24:06'),
-(6, 14, 'Pro Store', 'Gratis 1 domain!\r\n.com / .online / .site / .cloud / .website / .space / .xyz / .my.id / .web.id / .biz.id / .company', 'silver', 100000, 0, 25, 0, '100 GB SSD Storage,\r\nFree CDN,\r\nUnlimited Websites,\r\nFree Domain 1st Year,\r\nOptimized CPU Resources,\r\nFree Dedicated IP\r\n\r\n\r\n', 0, 'graphic-designer-14', '2023-07-21 07:26:42', '2023-07-21 07:26:42'),
-(12, 32, 'Hosting Pro Xy', 'Silver six n', 'Silver rexs', 10000, 10, 15, 0, 'Free Domain,Unimited Storge,Silver Six', 0, 'hosting-pro-silver-32', '2023-07-28 18:51:35', '2023-07-28 19:38:20');
+(12, 32, 'Hosting Pro Xy', 'Hosting', 'Kenapa orang PERCAYA HAL-HAL MISTIS DAN GA MASUK AKAL? - Ryu Hasan (Cara Kerja Otak Mistis) barcode', 1800, 10, 20, 0, 'Free Domain,Unimited Storge,Free', 0, 'hosting-pro-silver-32', '2023-07-28 18:51:35', '2023-07-29 16:25:37'),
+(13, 32, 'Hosting For Reactjs', 'Server web hosting, WordPress hosting, dan cloud hosting kami berlokasi di: Indonesia, Amerika Serikat, United Kingdom, Prancis, India, Singapura, Brasil, Lituania, dan Belanda.', 'Server web hosting, WordPress hosting, dan cloud hosting kami berlokasi di: Indonesia, Amerika Serikat, United Kingdom, Prancis, India, Singapura, Brasil, Lituania, dan Belanda,Netherlaned', 1600, 10, 30, 0, 'Free Domain, 50 Storage, VPS singapore', 0, 'reactjs-32', '2023-07-28 21:41:12', '2023-07-29 16:21:36'),
+(14, 32, 'Hosting For Golang', 'Descripsion', 'Reactjs Silver rest', 3500, 10, 25, 0, 'Free domain.com,5GB free storage,Vps', 0, 'hosting-for-golang-32', '2023-07-28 22:14:54', '2023-07-29 16:26:15'),
+(15, 32, 'Hosting 19 GB', 'Dscription', 'tes silver', 50000, 0, 0, 0, 'Freedomain .com', 0, 'hosting-19-gb-32', '2023-08-10 18:40:45', '2023-08-10 18:40:45');
 
 -- --------------------------------------------------------
 
@@ -121,39 +118,18 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`id`, `product_id`, `user_id`, `amount`, `status`, `code`, `payment_url`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 100000, 'paid', '', '', '2021-07-06 11:24:38', '2021-07-06 11:24:38'),
-(2, 2, 1, 50000, 'pending', '', '', '2021-07-06 11:24:38', '2021-07-06 11:24:38'),
-(3, 5, 14, 10000000, 'pending', '', '', '2021-07-07 14:20:37', '2021-07-07 14:20:37'),
-(4, 5, 14, 1234567, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v2/vtweb/677f2a6c-4d48-4e2f-9162-ecf987ba2243', '2021-07-07 17:03:53', '2021-07-07 17:03:54'),
-(5, 5, 14, 50000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v2/vtweb/7ace2042-238a-4028-82a0-a7423fc9e9f6', '2021-07-07 17:22:08', '2021-07-07 17:22:09'),
-(6, 5, 14, 510000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v2/vtweb/f7f2fba3-6e5e-485f-922e-87abb84e5e78', '2021-07-07 17:22:34', '2021-07-07 17:22:34'),
-(7, 1, 25, 10000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/2c410beb-5bf3-4265-9952-f8aef29e9d5b', '2023-07-22 10:59:27', '2023-07-22 10:59:27'),
-(8, 2, 25, 10000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/973f8741-ecdc-46dd-b155-d9d8b3d74254', '2023-07-22 11:05:52', '2023-07-22 11:05:53'),
-(9, 1, 30, 200000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/000cfaf8-f552-4bf8-9d58-706406e03ca5', '2023-07-22 12:23:25', '2023-07-22 12:23:26'),
-(10, 1, 30, 200000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/b57b2ab0-7538-4194-9d01-6f57f0a9b9ae', '2023-07-22 12:24:40', '2023-07-22 12:24:40'),
-(11, 2, 30, 200000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/495bc56b-cc15-4b9e-b98f-aec66e796ddd', '2023-07-23 04:18:16', '2023-07-23 04:18:22'),
-(12, 2, 30, 100000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/a6d10e8c-c3bd-4fc6-b3ea-ab61fdb412f5', '2023-07-23 14:44:08', '2023-07-23 14:44:12'),
-(13, 1, 30, 180000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/952b4cae-59a2-4965-94b4-0149b1f32c28', '2023-07-23 18:09:33', '2023-07-23 18:09:39'),
-(14, 1, 30, 1800000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/3866326a-8ac3-42a4-99b0-3b96ba583f6f', '2023-07-23 18:19:13', '2023-07-23 18:19:14'),
-(15, 2, 31, 1800000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/39ea65a6-9b07-456b-b3a5-6d7ab86e15d3', '2023-07-23 18:46:52', '2023-07-23 18:46:52'),
-(16, 3, 31, 1800000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/ccb70419-51b9-4736-ac6f-3ca410748cc0', '2023-07-23 18:50:49', '2023-07-23 18:50:50'),
-(17, 2, 30, 100000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/cdfdb051-b81b-448e-8482-c0dfc5d148e9', '2023-07-23 18:55:34', '2023-07-23 18:55:35'),
-(18, 2, 25, 10000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/869ceb95-0997-4214-bbb9-00e49c8070c4', '2023-07-23 18:57:48', '2023-07-23 18:57:48'),
-(19, 3, 30, 100000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/aa280d73-9498-4f4f-afcc-e8e041f52853', '2023-07-23 19:00:10', '2023-07-23 19:00:11'),
-(20, 5, 30, 100000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/e1d31879-4a55-4017-9934-16a83c7d1922', '2023-07-23 19:02:55', '2023-07-23 19:02:56'),
-(21, 2, 25, 100000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/d6e01531-dbd7-4e12-a62d-aff5fc6222cc', '2023-07-23 19:25:44', '2023-07-23 19:25:45'),
-(22, 3, 25, 100000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/51ef37ec-6045-47d2-8ae4-c364bbeab190', '2023-07-23 19:39:59', '2023-07-23 19:39:59'),
-(23, 2, 30, 100000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/8b476045-4bd3-47d2-b3e5-db9f07166c3a', '2023-07-23 19:53:37', '2023-07-23 19:53:38'),
-(24, 5, 30, 1200000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/3b3da807-b775-4b98-bd6f-d1a23d155439', '2023-07-23 19:55:13', '2023-07-23 19:55:13'),
-(25, 4, 30, 100000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/f88615f4-6e00-4acc-ae84-0cbc2f3a0c31', '2023-07-23 20:06:53', '2023-07-23 20:06:53'),
-(26, 5, 25, 150000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/f540e205-17bb-41d7-a58b-dea492128b88', '2023-07-23 20:07:52', '2023-07-23 20:07:52'),
-(27, 6, 30, 100000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/e805cc35-8b22-40cb-a06d-ac0efef25ba1', '2023-07-23 20:28:37', '2023-07-23 20:28:38'),
-(28, 4, 30, 100000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/933ba297-d280-4abc-a246-5773841e7ea7', '2023-07-23 20:30:33', '2023-07-23 20:30:33'),
-(29, 5, 30, 1800000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/d8e773bd-f5b6-4ddd-b7e2-73ebeb68a502', '2023-07-23 20:33:42', '2023-07-23 20:33:43'),
-(30, 3, 30, 1800000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/fdfecf13-010d-43d1-b3b9-88e159bca7b4', '2023-07-23 20:50:52', '2023-07-23 20:50:52'),
-(31, 2, 30, 1200000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/ec1cbfd9-1560-4520-af6f-d3bdba4e87fc', '2023-07-23 20:54:54', '2023-07-23 20:54:54'),
-(32, 2, 31, 1200000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/123744cc-9bbb-4fc0-9125-5f310ba4925f', '2023-07-23 20:58:11', '2023-07-23 20:58:11'),
-(33, 6, 31, 1800000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/85a02c16-8c69-4faa-bce9-64bb59c4c8e7', '2023-07-23 21:29:23', '2023-07-23 21:29:24');
+(34, 5, 32, 1800000, 'paid', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/687e63b1-6605-4050-8734-9650f298381e', '2023-07-28 22:26:15', '2023-08-11 10:49:37'),
+(35, 12, 30, 192000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/df23a83e-b50b-4267-8601-5f3539e524b2', '2023-07-29 05:15:03', '2023-07-29 05:15:09'),
+(36, 6, 32, 1800000, 'paid', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/93689f07-eaaf-429a-8693-3ee1332ea976', '2023-07-29 07:26:48', '2023-08-11 10:40:42'),
+(37, 13, 32, 26880, 'paid', '', '', '2023-08-08 15:43:51', '2023-08-10 18:25:27'),
+(38, 14, 32, 3500, 'paid', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/7562f280-96dd-4594-b35a-3a69b74c60ba', '2023-08-08 20:45:10', '2023-08-11 10:41:40'),
+(39, 13, 32, 26880, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/593105a0-b904-4f2b-8890-e035951db009', '2023-08-11 18:44:17', '2023-08-11 18:44:21'),
+(40, 13, 33, 26880, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/3b3c23be-9022-4972-a820-f3a05749694e', '2023-08-12 13:15:57', '2023-08-12 13:16:01'),
+(41, 14, 33, 63000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/3bbdff5b-9d2f-435a-a617-074f07afe647', '2023-08-12 13:17:09', '2023-08-12 13:17:09'),
+(42, 13, 34, 17280, 'paid', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/03d51cd9-4444-4115-86b4-dd08b861ae86', '2023-08-12 13:21:30', '2023-08-12 13:47:05'),
+(43, 14, 30, 63000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/d1916daf-95ac-4567-8174-2cdb7f01b2bf', '2023-08-12 15:03:14', '2023-08-12 15:03:15'),
+(44, 15, 31, 1200000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/879e12d3-7798-40ad-8c9f-40a4fc46f9b7', '2023-08-12 15:03:37', '2023-08-12 15:03:37'),
+(45, 15, 30, 1200000, 'pending', '', 'https://app.sandbox.midtrans.com/snap/v3/redirection/eac9627c-e744-4fb5-a2ee-cf82a37b3abd', '2023-08-12 15:04:00', '2023-08-12 15:04:00');
 
 -- --------------------------------------------------------
 
@@ -190,7 +166,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `occupation`, `password_hash`, `avat
 (29, 'Julia Keeva', 'julia@gmail.com', 'Product Designer', '$2a$04$X7/nLaeqXcoIEENrLCyyKupFh1sHKfCF8TFuz0KOefP1bfnQDUcAG', '', 'user', '', '2023-07-21 14:29:30', '2023-07-21 14:29:30'),
 (30, 'Sabilah Putri', 'sabilaputrimahardika@gmail.com', 'Product Designer', '$2a$04$K2j6I3Eqro598nhAinvtXOSXlki1N.41bIDLHUzFObS2xtQeFP5a.', '', 'user', '', '2023-07-22 11:57:53', '2023-07-22 11:57:53'),
 (31, 'Putri Bahjah najmina', 'farihulrouf99@gmail.com', 'Product Designer', '$2a$04$.Q6WDWnNzFaHp7scLM6UCe3dplq64fATfGc8Sv0suQ8/glHo/QhoC', 'images/31-Screenshot 2023-07-22 at 6.02.36 PM.png', 'user', '', '2023-07-23 18:45:54', '2023-07-23 18:46:12'),
-(32, 'putri bahjah', 'putri99@gmail.com', 'Product Designer', '$2a$04$GNA5cA1/TmMf4sZ/1h9Q4.Wi/sfV43gtgFRtNXxJKc1fHG4FyEvdO', 'images/32-Image.png', 'admin', '', '2023-07-28 13:22:34', '2023-07-28 13:22:55');
+(32, 'putri bahjah', 'putri99@gmail.com', 'Product Designer', '$2a$04$GNA5cA1/TmMf4sZ/1h9Q4.Wi/sfV43gtgFRtNXxJKc1fHG4FyEvdO', 'images/32-Image.png', 'admin', '', '2023-07-28 13:22:34', '2023-07-28 13:22:55'),
+(33, 'Julia Keeva', 'juliasilver@gmail.com', 'Product Designer', '$2a$04$g4nnKLj8YxdyTlkEC15MyOcMVsmBhuJOinvzzf3trL8HwmQO4Sbbi', 'images/33-Screenshot 2023-08-10 at 7.00.22 PM.png', 'user', '', '2023-08-12 13:15:04', '2023-08-12 13:15:42'),
+(34, 'Aris', 'aries@gmail.com', 'Product Designer', '$2a$04$NPgLqwULBNidUbRCRUNsBeNeKFpehz9/JozTgNrZkhq.qNK..BXV.', 'images/34-Screenshot 2023-08-11 at 6.47.52 PM.png', 'user', '', '2023-08-12 13:21:04', '2023-08-12 13:21:16');
 
 --
 -- Indexes for dumped tables
@@ -228,7 +206,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `product_images`
@@ -240,13 +218,13 @@ ALTER TABLE `product_images`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
