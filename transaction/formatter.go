@@ -48,6 +48,7 @@ type UserTransactionFormatter struct {
 type ProductFormatter struct {
 	Name     string `json:"name"`
 	ImageURL string `json:"image_url"`
+	Description string `json:"description"`
 }
 
 func FormatUserTransaction(transaction Transaction) UserTransactionFormatter {
@@ -60,6 +61,7 @@ func FormatUserTransaction(transaction Transaction) UserTransactionFormatter {
 	productFormatter := ProductFormatter{}
 	productFormatter.Name = transaction.Product.Name
 	productFormatter.ImageURL = ""
+	productFormatter.Description = transaction.Product.Description
 
 	if len(transaction.Product.ProductImages) > 0 {
 		productFormatter.ImageURL = transaction.Product.ProductImages[0].FileName
