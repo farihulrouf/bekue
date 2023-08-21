@@ -73,6 +73,8 @@ func (r *repository) Update(transaction Transaction) (Transaction, error) {
 
 func (r *repository) FindAll() ([]Transaction, error) {
 	var transactions []Transaction
+	//db.Model(&User{}).Limit(10).Find(&APIUser{})
+	//err := r.db.Preload("Product").Order("id desc").Limit(5).Find(&transactions).Error
 
 	err := r.db.Preload("Product").Order("id desc").Find(&transactions).Error
 	if err != nil {

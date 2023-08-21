@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@ag-grid-community/core": "^30.0.6"
+  }
+}

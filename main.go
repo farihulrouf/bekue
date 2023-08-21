@@ -26,9 +26,9 @@ import (
 )
 
 func main() {
-	dsn := "root@tcp(127.0.0.1:3306)/hosting?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root@tcp(127.0.0.1:3306)/kue_toko?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
+	
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -110,8 +110,8 @@ func main() {
 	router.GET("/login", sessionWebHandler.New)
 	router.POST("/session", sessionWebHandler.Create)
 	router.GET("/logout", sessionWebHandler.Destroy)
-
-	router.Run()
+	//Run(":9888")
+	router.Run(":8080")
 }
 
 func authMiddleware(authService auth.Service, userService user.Service) gin.HandlerFunc {
@@ -190,5 +190,6 @@ func loadTemplates(templatesDir string) multitemplate.Renderer {
 		files := append(layoutCopy, include)
 		r.AddFromFiles(filepath.Base(include), files...)
 	}
+	
 	return r
 }
