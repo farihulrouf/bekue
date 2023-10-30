@@ -9,6 +9,7 @@ type GetProductTransactionsInput struct {
 
 type CreateTransactionInput struct {
 	Amount     int `json:"amount" binding:"required"`
+	Address    string `json:"address" binding:"required"`
 	ProductID int `json:"product_id" binding:"required"`
 	User       user.User
 }

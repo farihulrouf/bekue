@@ -88,6 +88,7 @@ func (s *service) GetTransactionsByUserID(userID int) ([]Transaction, error) {
 func (s *service) CreateTransaction(input CreateTransactionInput) (Transaction, error) {
 	transaction := Transaction{}
 	transaction.ProductID = input.ProductID
+	transaction.Address = input.Address
 	transaction.Amount = input.Amount
 	transaction.UserID = input.User.ID
 	transaction.Status = "pending"

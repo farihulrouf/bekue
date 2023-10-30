@@ -4,7 +4,6 @@ import (
 	"behosting/product"
 	"behosting/user"
 	"time"
-
 	"github.com/leekchan/accounting"
 )
 
@@ -16,6 +15,7 @@ type Transaction struct {
 	Status     string
 	Code       string
 	PaymentURL string
+	Address    string
 	User       user.User
 	Product   product.Product
 	CreatedAt  time.Time
